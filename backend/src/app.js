@@ -1,6 +1,10 @@
 import express from "express";
 import cors from "cors";
+
 import authRoutes from "./routes/auth.routes.js";
+import userRoutes from "./routes/user.routes.js";
+import studentRoutes from "./routes/student.routes.js";
+import teacherRoutes from "./routes/teacher.routes.js";
 
 const app = express();
 
@@ -16,4 +20,8 @@ app.get("/api/test", (_, res) => {
 });
 
 app.use("/api/auth", authRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/students", studentRoutes);
+app.use("/api/teachers", teacherRoutes);
+
 export default app;
