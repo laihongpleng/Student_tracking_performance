@@ -5,7 +5,11 @@ const userSchema = new mongoose.Schema(
     username: { type: String, unique: true,required: true, },
     email: { type: String, unique: true,required: true, },
     password_hash: {type: String, required: true,},
-    role: { type: String, enum: ["admin", "teacher", "student"],required: true, },
+    role: { type: String, enum: ["admin", "teacher", "student"], required: true, },
+    isActive: {
+      type: Boolean,
+      default: true,
+    },
     avatar: String,
     cover: String,
   },

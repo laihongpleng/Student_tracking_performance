@@ -8,6 +8,10 @@ export const loginAdmin = async (email, password) => {
     throw new Error("Admin not found");
   }
 
+  if (!user.isActive) {
+  throw new Error("Account is inactive");
+  }
+
   const isMatch = await bcrypt.compare(password, user.password_hash);
 
   if (!isMatch) {
@@ -28,6 +32,10 @@ export const loginUserByUsername = async (username, password) => {
     throw new Error("Admin must login with email");
   }
 
+  if (!user.isActive) {
+  throw new Error("Account is inactive");
+  }
+  
   const isMatch = await bcrypt.compare(password, user.password_hash);
 
   if (!isMatch) {

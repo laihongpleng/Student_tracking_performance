@@ -5,6 +5,12 @@ import { generateUsername, generatePassword } from "../utils/credentialGenerator
 
 export const createStudentService = async (data) => {
   const { full_name, email, gender, date_of_birth, class_id } = data;
+  
+  const existingUser = await User.findOne({ email });
+
+  if (existingUser) {
+    throw new Error("Email already exists");
+  }
 
   const username = await generateUsername(full_name);
   const password = generatePassword();

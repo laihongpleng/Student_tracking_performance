@@ -1,36 +1,31 @@
-import User from "../models/User.js";
-import Student from "../models/Student.js";
-import Teacher from "../models/Teacher.js";
+import {
+  getAllActiveUsers,
+  deactivateUserById,
+  activateUserById,
+} from "../services/user.service.js";
 
 export const getAllUsers = async (req, res) => {
   try {
-    const users = await User.find().select("-password_hash");
-
+    const users = await getAllActiveUsers();
     res.json(users);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
 
-export const deleteUser = async (req, res) => {
+export const deactivateUser = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id);
+    await deactivateUserById(req.params.id);
+    res.json({ message: "User deactivated successfully" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
 
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-
-    if (user.role === "student") {
-      await Student.deleteOne({ user_id: user._id });
-    }
-
-    if (user.role === "teacher") {
-      await Teacher.deleteOne({ user_id: user._id });
-    }
-
-    await User.findByIdAndDelete(user._id);
-
-    res.json({ message: "User deleted successfully" });
+export const activateUser = async (req, res) => {
+  try {
+    await activateUserById(req.params.id);
+    res.json({ message: "User activated successfully" });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
