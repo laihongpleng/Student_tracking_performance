@@ -5,22 +5,69 @@ const attendanceSchema = new mongoose.Schema(
     student_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Student",
+      required: true,
     },
+
+    teacher_assignment_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "TeacherAssignment",
+      required: true,
+    },
+
     teacher_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Teacher",
+      required: true,
     },
+
     class_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Class",
+      required: true,
     },
-    date: Date,
+
+    subject_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Subject",
+      required: true,
+    },
+
+    attendance_date: {
+      type: Date,
+      required: true,
+    },
+
     status: {
       type: String,
-      enum: ["Present", "Absent", "Tardy"],
+      enum: ["Present", "Absent", "Late", "Excused"],
+      default: "Present",
+    },
+
+    semester:{
+    type:String,
+    enum:["Semester 1", "Semester 2"]
+    },
+
+    remark: {
+      type: String,
+      trim: true,
+      default: "",
     },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+  }
+);
+
+attendanceSchema.index(
+  {
+    student_id: 1,
+    teacher_assignment_id:1,  
+    attendance_date: 1,
+  },
+  {
+    unique: true,
+  }
 );
 
 export default mongoose.model("Attendance", attendanceSchema);
