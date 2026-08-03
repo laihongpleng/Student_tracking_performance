@@ -11,6 +11,7 @@ import teacherAssignmentRoutes from "./routes/teacherAssignment.routes.js";
 import attendanceRoutes from "./routes/attendance.routes.js";
 import scoreRoutes from "./routes/score.routes.js";
 import adminRoutes from "./routes/admin.routes.js";
+import teacherDashboardRoutes from "./routes/teacherclassesdashboard.routes.js";
 
 const app = express();
 
@@ -35,5 +36,6 @@ app.use("/api/assignments", teacherAssignmentRoutes);
 app.use("/api/attendance", attendanceRoutes);
 app.use("/api/scores", scoreRoutes)
 app.use("/api/admin", adminRoutes);
+app.use("/api/teacher",teacherDashboardRoutes)
 
 export default app;
