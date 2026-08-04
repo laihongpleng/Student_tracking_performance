@@ -40,7 +40,7 @@ const TeacherTable = ({
                         teachers.map(item => (
                             <tr
                                 key={item._id}
-                                className="border-b hover:bg-blue-50/50"
+                                className="border-b border-gray-100 hover:bg-blue-50/50"
                             >
 
                                 <td className="p-3 font-semibold">
