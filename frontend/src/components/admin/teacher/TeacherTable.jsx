@@ -1,0 +1,117 @@
+import { Pencil, UserX, UserCheck } from "lucide-react";
+
+const TeacherTable = ({
+    teachers,
+    onEdit,
+    onDeactivate,
+    onActivate
+}) => {
+
+    return (
+        <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+
+                <thead>
+                    <tr className="bg-gray-50 text-gray-500">
+                        <th className="p-3 text-left">
+                            Teacher
+                        </th>
+
+                        <th className="p-3">
+                            Email
+                        </th>
+
+                        <th className="p-3">
+                            Gender
+                        </th>
+
+                        <th className="p-3">
+                            Status
+                        </th>
+
+                        <th className="p-3">
+                            Action
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {
+                        teachers.map(item => (
+                            <tr
+                                key={item._id}
+                                className="border-b hover:bg-blue-50/50"
+                            >
+
+                                <td className="p-3 font-semibold">
+                                    {item.full_name}
+                                </td>
+
+                                <td className="text-center">
+                                    {item.user_id?.email}
+                                </td>
+
+                                <td className="text-center">
+                                    {item.gender}
+                                </td>
+
+                                <td className="text-center">
+                                    <span
+                                        className={`px-3 py-1 rounded-full text-xs font-medium ${
+                                            item.user_id?.isActive
+                                            ? "bg-green-100 text-green-700"
+                                            : "bg-red-100 text-red-700"
+                                        }`}
+                                    >
+                                        {
+                                            item.user_id?.isActive
+                                            ? "Active"
+                                            : "Inactive"
+                                        }
+                                    </span>
+                                </td>
+
+                                <td className="text-center">
+
+                                    <button
+                                        onClick={() => onEdit(item)}
+                                        className="text-blue-600 mr-3"
+                                    >
+                                        <Pencil size={16}/>
+                                    </button>
+
+                                    {
+                                        item.user_id?.isActive
+                                        ?
+
+                                        <button
+                                            onClick={() => onDeactivate(item)}
+                                            className="text-red-600"
+                                        >
+                                            <UserX size={16}/>
+                                        </button>
+
+                                        :
+
+                                        <button
+                                            onClick={() => onActivate(item)}
+                                            className="text-green-600"
+                                        >
+                                            <UserCheck size={16}/>
+                                        </button>
+                                    }
+
+                                </td>
+
+                            </tr>
+                        ))
+                    }
+                </tbody>
+
+            </table>
+        </div>
+    );
+
+};
+
+export default TeacherTable;

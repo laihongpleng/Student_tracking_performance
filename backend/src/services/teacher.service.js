@@ -2,6 +2,7 @@ import User from "../models/User.js";
 import Teacher from "../models/Teacher.js";
 import bcrypt from "bcryptjs";
 import { generateUsername, generatePassword } from "../utils/credentialGenerator.js";
+import { sendTeacherCredential } from "../utils/email.js";
 
 export const createTeacherService = async (data) => {
   const { full_name, email, gender } = data;
@@ -29,17 +30,22 @@ export const createTeacherService = async (data) => {
     gender,
   });
 
+  await sendTeacherCredential(
+    email,
+    username,
+    password
+);
+
   return {
     teacher,
-    username,
-    password,
+    message: "Teacher account created. Login information sent to email."
   };
 };
 
 export const getTeachers = async () => {
   const teachers = await Teacher.find().populate(
     "user_id",
-    "username email role"
+    "username email role isActive"
   );
 
   return teachers;
@@ -48,7 +54,7 @@ export const getTeachers = async () => {
 export const getTeacherById = async (id) => {
   const teacher = await Teacher.findById(id).populate(
     "user_id",
-    "username email role"
+    "username email role isActive"
   );
 
   if (!teacher) {
@@ -86,7 +92,7 @@ export const updateTeacher = async (id, data) => {
 
   const updatedTeacher = await Teacher.findById(id).populate(
     "user_id",
-    "username email role"
+    "username email role isActive"
   );
 
   return updatedTeacher;
