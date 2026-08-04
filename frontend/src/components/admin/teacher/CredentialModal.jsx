@@ -16,7 +16,7 @@ const CredentialModal=({
                             <CircleCheck size={20}/>
                         </div>
                         <h2 className="font-semibold text-gray-800">
-                            Teacher Created
+                            Account Created
                         </h2>
                     </div>
                     <button
@@ -27,9 +27,9 @@ const CredentialModal=({
                     </button>
                 </div>
                 <p className="text-sm text-gray-600 leading-6">
-                    The teacher account has been created successfully.
+                    The account has been created successfully.
                     <br/><br/>
-                    The login credentials have been sent automatically to the teacher's email address.
+                    The login credentials have been sent automatically to the user's email address.
                 </p>
                 <button
                     onClick={onClose}

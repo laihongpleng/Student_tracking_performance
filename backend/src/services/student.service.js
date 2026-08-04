@@ -3,6 +3,7 @@ import Student from "../models/Student.js";
 import "../models/Class.js";
 import bcrypt from "bcryptjs";
 import { generateUsername, generatePassword } from "../utils/credentialGenerator.js";
+import { sendStudentCredential } from "../utils/email.js";
 
 export const createStudentService = async (data) => {
   const { full_name, email, gender, date_of_birth, class_id } = data;
@@ -32,16 +33,22 @@ export const createStudentService = async (data) => {
     class_id: class_id || null,
   });
 
+  await sendStudentCredential(
+    email,
+    username,
+    password
+  );
+
   return {
     student,
-    username,
-    password,
+        message:
+        "Student account created. Login information sent to email."
   };
 };
 
 export const getStudents = async () => {
   const students = await Student.find()
-    .populate("user_id", "username email role")
+    .populate("user_id", "username email role isActive")
     .populate("class_id");
 
   return students;
@@ -49,7 +56,7 @@ export const getStudents = async () => {
 
 export const getStudentById = async (id) => {
     const student = await Student.findById(id)
-        .populate("user_id", "username email role")
+        .populate("user_id", "username email role isActive")
         .populate("class_id");
 
   if (!student) {
@@ -83,7 +90,7 @@ export const updateStudent = async (id, data) => {
   }
 
     const updatedStudent = await Student.findById(id)
-        .populate("user_id", "username email role")
+        .populate("user_id", "username email role isActive")
         .populate("class_id");
     return updatedStudent;
 };
