@@ -13,10 +13,10 @@ const menus=[
 {name:"Teacher Management",path:"/admin/teachers",icon:UserRoundCog},
 {name:"Subject Management",path:"/admin/subjects",icon:BookOpen},
 {name:"Teacher Assignment",path:"/admin/assignment",icon:ClipboardList},
-{name:"Performance Analysis",path:"/admin/performance",icon:BarChart3},
-{name:"Attendance Overview",path:"/admin/attendance",icon:CalendarCheck},
-{name:"Academic Results",path:"/admin/results",icon:FileText},
-{name:"Academic Reports",path:"/admin/reports",icon:FileText}
+// {name:"Performance Analysis",path:"/admin/performance",icon:BarChart3},
+// {name:"Attendance Overview",path:"/admin/attendance",icon:CalendarCheck},
+// {name:"Academic Results",path:"/admin/results",icon:FileText},
+// {name:"Academic Reports",path:"/admin/reports",icon:FileText}
 ];
 
 return(
