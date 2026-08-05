@@ -179,25 +179,59 @@ export const getDashboardSummary = async (academicYear) => {
         );
 
 
+        const now = new Date();
+
+        const startOfMonth = new Date(
+            now.getFullYear(),
+            now.getMonth(),
+            1
+        );
+
+        const endOfMonth = new Date(
+            now.getFullYear(),
+            now.getMonth() + 1,
+            0,
+            23,
+            59,
+            59
+        );
+
+
     const attendance = await Attendance.find({
-        class_id: {
-            $in: classIds
-        }
-    });
+
+    class_id: {
+        $in: classIds
+    },
+
+    date: {
+        $gte: startOfMonth,
+        $lte: endOfMonth
+    }
+
+});
 
 
     let present = 0;
-
+    let absent = 0;
+    let late = 0;
 
     attendance.forEach(item => {
 
-        if (
-            item.status === "Present" ||
-            item.status === "Late" ||
-            item.status === "Excused"
-        ) {
-            present++;
-        }
+        if(item.status === "Present"){
+    present++;
+}
+
+else if(item.status === "Late"){
+    late++;
+}
+
+else if(item.status === "Absent"){
+    absent++;
+}
+
+else if(item.status === "Excused"){
+    present++;
+}
 
     });
 
@@ -224,6 +258,11 @@ export const getDashboardSummary = async (academicYear) => {
         totalClasses,
         averageScore,
         attendanceRate,
+        attendanceOverview:{
+        present,
+        absent,
+        late
+        },
         classOverview
     };
 
