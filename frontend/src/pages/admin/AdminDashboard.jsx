@@ -37,7 +37,7 @@ const AdminDashboard = () => {
                                 <AttendanceOverview data={dashboard?.attendanceOverview}/>
                             </div>
 
-                            <PerformanceTrendChart />
+                            <PerformanceTrendChart data={dashboard?.performanceTrend || []}/>
 
                             <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
                                 <MonthlyResultTable />
