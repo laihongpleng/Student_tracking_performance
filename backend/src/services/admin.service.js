@@ -20,6 +20,60 @@ const getAcademicClasses = async (academicYear) => {
     };
 };
 
+export const getClassOverview = async(academicYear)=>{
+
+    const classes=await Class.find({
+        academic_year:academicYear,
+        isActive:true
+    });
+
+
+    const grades={};
+
+
+    for(const item of classes){
+
+        const match = item.class_name.match(/\d+/);
+
+        if(!match){
+            continue;
+        }
+
+        const gradeNumber = match[0];
+
+                if(!grades[gradeNumber]){
+
+            grades[gradeNumber] = {
+
+                name:`Grade ${gradeNumber}`,
+
+                classes:[]
+
+            };
+
+        }
+
+
+        const students=await Student.countDocuments({
+            class_id:item._id
+        });
+
+
+        grades[gradeNumber].classes.push({
+
+            name:item.class_name,
+
+            students
+
+        });
+
+    }
+
+
+    return Object.values(grades);
+
+};
+
 export const getDashboardSummary = async (academicYear) => {
 
     const {
@@ -158,6 +212,10 @@ export const getDashboardSummary = async (academicYear) => {
                 100
             ).toFixed(2)
         );
+    const classOverview =
+    await getClassOverview(
+        academicYear
+    );
 
 
     return {
@@ -165,7 +223,8 @@ export const getDashboardSummary = async (academicYear) => {
         totalTeachers,
         totalClasses,
         averageScore,
-        attendanceRate
+        attendanceRate,
+        classOverview
     };
 
 };
@@ -1402,3 +1461,4 @@ export const getClassMonthlyPerformanceTrend = async (
     return result;
 
 };
+

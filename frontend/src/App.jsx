@@ -10,12 +10,28 @@ import StudentDashboard from "./pages/student/StudentDashboard";
 import Unauthorized from "./pages/Unauthorized";
 import ProtectedRoute from "./layouts/ProtectedRoute";
 
+import AdminClassManagement from "./pages/admin/AdminClassManagement";
+import AdminStudentManagement from "./pages/admin/AdminStudentMangament";
+import AdminTeacherManagement from "./pages/admin/AdminTeacherManagement";
+import AdminSubjectManagement from "./pages/admin/AdminSubjectManagment";
+import AdminTeacherAssignmentManagement from "./pages/admin/AdminTeacherAssignmentManagement";
+
+
 function App() {
+
     return (
         <Routes>
-            <Route path="/" element={<Login />} />
 
-            <Route path="/admin" element={<AdminLogin />} />
+            <Route 
+                path="/" 
+                element={<Login />} 
+            />
+
+            <Route 
+                path="/admin" 
+                element={<AdminLogin />} 
+            />
+
 
             <Route
                 path="/admin/dashboard"
@@ -26,6 +42,43 @@ function App() {
                 }
             />
 
+
+            <Route
+                path="/admin/classes"
+                element={
+                    <AdminClassManagement />
+                }
+            />
+
+            <Route
+                path="/admin/students"
+                element={
+                    <AdminStudentManagement />
+                }
+            />
+
+            <Route
+                path="/admin/subjects"
+                element={
+                    <AdminSubjectManagement />
+                }
+            />
+
+            <Route
+                path="/admin/teachers"
+                element={
+                    <AdminTeacherManagement />
+                }
+            />
+
+            <Route
+                path="/admin/assignment"
+                element={
+                    <AdminTeacherAssignmentManagement />
+                }
+            />
+
+
             <Route
                 path="/teacher"
                 element={
@@ -34,6 +87,7 @@ function App() {
                     </ProtectedRoute>
                 }
             />
+
 
             <Route
                 path="/student"
@@ -44,9 +98,18 @@ function App() {
                 }
             />
 
-            <Route path="/unauthorized" element={<Unauthorized />} />
+
+            <Route
+                path="/unauthorized"
+                element={
+                    <Unauthorized />
+                }
+            />
+
         </Routes>
     );
+
 }
+
 
 export default App;

@@ -9,7 +9,8 @@ import {
     classPerformance,
     monthlyClassResult,
     semesterResult,
-    classMonthlyPerformanceTrend
+    classMonthlyPerformanceTrend,
+    classOverview
 } from "../controllers/admin.controller.js";
 
 import { protect } from "../middlewares/auth.middleware.js";
@@ -78,6 +79,11 @@ router.get(
     protect,
     allowRoles("admin"),
     classMonthlyPerformanceTrend
+);
+
+router.get(
+    "/class-overview",
+    classOverview
 );
 
 export default router;

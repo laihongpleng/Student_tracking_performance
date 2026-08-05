@@ -7,8 +7,52 @@ import {
     getClassPerformance,
     getMonthlyClassResult,
     getSemesterClassResult,
-    getClassMonthlyPerformanceTrend
+    getClassMonthlyPerformanceTrend,
+    getClassOverview
 } from "../services/admin.service.js";
+
+export const classOverview = async (req, res) => {
+
+    try {
+
+        const academicYear =
+            req.query.academicYear;
+
+
+        if(!academicYear){
+
+            return res.status(400).json({
+
+                message:
+                "Academic year is required"
+
+            });
+
+        }
+
+
+        const data =
+            await getClassOverview(
+                academicYear
+            );
+
+
+        res.json(data);
+
+
+    }
+    catch(err){
+
+        res.status(500).json({
+
+            message:
+            err.message
+
+        });
+
+    }
+
+};
 
 
 export const dashboardSummary = async (req, res) => {
