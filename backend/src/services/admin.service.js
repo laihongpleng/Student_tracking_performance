@@ -467,19 +467,26 @@ export const getSubjectPerformance = async (
 
     scores.forEach(item => {
 
+
         const assessment =
             item.assessment_id;
+
+
+        if(!assessment){
+            return;
+        }
 
 
         const subject =
             assessments.find(
                 a =>
-                a._id.toString() ===
+                a._id.toString()
+                ===
                 assessment._id.toString()
             )?.subject_id;
 
 
-        if (!subject) {
+        if(!subject){
             return;
         }
 
@@ -491,12 +498,11 @@ export const getSubjectPerformance = async (
             ) * 100;
 
 
-        if (!subjectMap[subject._id]) {
 
-            subjectMap[subject._id] = {
+        if(!subjectMap[subject._id]){
 
-                subject_id:
-                    subject._id,
+
+            subjectMap[subject._id]={
 
                 subject_name:
                     subject.subject_name,
@@ -512,26 +518,28 @@ export const getSubjectPerformance = async (
         }
 
 
+
         subjectMap[subject._id].total +=
             percentage;
 
 
         subjectMap[subject._id].count++;
 
+
     });
 
 
-    return Object.values(
-        subjectMap
-    ).map(item => ({
 
-        subject_id:
-            item.subject_id,
+    const subjects =
+    Object.values(subjectMap)
+    .map(item => ({
 
-        subject:
+
+        name:
             item.subject_name,
 
-        average:
+
+        score:
             Number(
                 (
                     item.total /
@@ -539,7 +547,60 @@ export const getSubjectPerformance = async (
                 ).toFixed(2)
             )
 
+
     }));
+
+
+
+    return {
+
+
+        strong:
+
+            subjects
+            .filter(
+                item =>
+                item.score >= 85
+            )
+            .sort(
+                (a,b)=>
+                b.score-a.score
+            )
+            .slice(0,3),
+
+
+
+        average:
+
+            subjects
+            .filter(
+                item =>
+                item.score >= 60 &&
+                item.score < 85
+            )
+            .sort(
+                (a,b)=>
+                b.score-a.score
+            )
+            .slice(0,3),
+
+
+
+        weak:
+
+            subjects
+            .filter(
+                item =>
+                item.score < 60
+            )
+            .sort(
+                (a,b)=>
+                b.score-a.score
+            )
+            .slice(0,3)
+
+
+    };
 
 };
 

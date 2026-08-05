@@ -89,6 +89,19 @@ export const getClassPerformance = async (
 
 };
 
+export const getSubjectPerformance = async (
+    academicYear
+) => {
+
+    const res = await api.get(
+        `/admin/subject-performance?academicYear=${academicYear}`
+    );
+
+
+    return res.data;
+
+};
+
 
 
 export default {
@@ -101,6 +114,8 @@ export default {
 
     getStudentRanking,
 
-    getClassPerformance
+    getClassPerformance,
+
+    getSubjectPerformance
 
 };

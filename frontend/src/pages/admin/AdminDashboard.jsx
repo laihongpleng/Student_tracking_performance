@@ -4,13 +4,15 @@ import ClassOverview from "../../components/admin/dashboard/ClassOverview";
 import AttendanceOverview from "../../components/admin/dashboard/AttendanceOverview";
 import MonthlyResultTable from "../../components/admin/dashboard/MonthlyResultTable";
 import SemesterResultTable from "../../components/admin/dashboard/SemesterResultTable";
-import PerformanceAnalysis from "../../components/admin/dashboard/PerformanceAnalysis";
+
 import PerformanceTrendChart from "../../components/admin/dashboard/PerformanceTrendChart";
-import PerformanceSummary from "../../components/admin/dashboard/PerformanceSummary";
+
 import { useAdmin } from "../../context/AdminContext";
 import useAdminDashboard from "../../hooks/useAdminDashboard";
 import useMonthlyResult from "../../hooks/useMonthlyResult";
 import useSemesterResult from "../../hooks/useSemesterResult";
+import useSubjectPerformance from "../../hooks/useSubjectPerformance";
+import SubjectPerformanceCard from "../../components/admin/dashboard/SubjectPerformanceCard";
 
 const AdminDashboard = () => {
     const { academicYear } = useAdmin();
@@ -25,6 +27,11 @@ const AdminDashboard = () => {
     } = useSemesterResult(
         academicYear,
         "Semester 1"
+        );
+        const {
+        subjectPerformance
+    } = useSubjectPerformance(
+        academicYear
     );
     const { dashboard, loading } = useAdminDashboard(academicYear);
 
@@ -57,9 +64,31 @@ const AdminDashboard = () => {
                                 <MonthlyResultTable data={monthlyResult}/>
                                 <SemesterResultTable data={semesterResult} />
                             </div>
-
+                            
                             {/* <PerformanceSummary /> */}
-                            <PerformanceAnalysis />
+                           
+
+                            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+    <SubjectPerformanceCard
+        title="Strong Subjects"
+        subjects={subjectPerformance.strong}
+        type="strong"
+    />
+
+    <SubjectPerformanceCard
+        title="Average Subjects"
+        subjects={subjectPerformance.average}
+        type="average"
+    />
+
+    <SubjectPerformanceCard
+        title="Weak Subjects"
+        subjects={subjectPerformance.weak}
+        type="weak"
+    />
+
+</div>
                         </div>
             
                     )
