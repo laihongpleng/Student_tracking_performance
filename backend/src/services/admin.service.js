@@ -765,6 +765,43 @@ export const getClassPerformance = async (
 
         });
 
+        const passStudents =
+    classScores.filter(item => {
+
+        const assessment =
+            item.assessment_id;
+
+
+        if(!assessment){
+            return false;
+        }
+
+
+        const percentage =
+            (
+                item.score /
+                assessment.max_score
+            ) * 100;
+
+
+        return percentage >= 50;
+
+    }).length;
+
+
+
+const passRate =
+    classScores.length === 0
+    ? 0
+    :
+    Number(
+        (
+            passStudents /
+            classScores.length *
+            100
+        ).toFixed(2)
+    );
+
 
         result.push({
 
@@ -801,8 +838,8 @@ export const getClassPerformance = async (
                         classAttendance.length *
                         100
                     ).toFixed(2)
-                )
-
+                ),
+            passRate
         });
 
     }

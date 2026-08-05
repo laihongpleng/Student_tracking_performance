@@ -58,7 +58,7 @@ const AdminDashboard = () => {
                                 <SemesterResultTable data={semesterResult} />
                             </div>
 
-                            <PerformanceSummary />
+                            {/* <PerformanceSummary /> */}
                             <PerformanceAnalysis />
                         </div>
             

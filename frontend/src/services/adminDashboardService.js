@@ -51,12 +51,56 @@ export const getSemesterResult = async (
 
 };
 
+export const getStudentRanking = async (
+    academicYear
+) => {
+
+    const res = await api.get(
+        "/admin/ranking",
+        {
+            params:{
+                academicYear
+            }
+        }
+    );
+
+
+    return res.data;
+
+};
+
+
+
+export const getClassPerformance = async (
+    academicYear
+) => {
+
+    const res = await api.get(
+        "/admin/class-performance",
+        {
+            params:{
+                academicYear
+            }
+        }
+    );
+
+
+    return res.data;
+
+};
+
 
 
 export default {
+
     getAdminDashboard,
 
     getMonthlyResult,
 
-    getSemesterResult
+    getSemesterResult,
+
+    getStudentRanking,
+
+    getClassPerformance
+
 };
