@@ -31,8 +31,32 @@ export const getMonthlyResult = async (
 
 };
 
+export const getSemesterResult = async (
+    academicYear,
+    semester
+) => {
+
+    const response = await api.get(
+        "/admin/semester-result",
+        {
+            params:{
+                academicYear,
+                semester
+            }
+        }
+    );
+
+
+    return response.data;
+
+};
+
 
 
 export default {
-    getMonthlyResult
+    getAdminDashboard,
+
+    getMonthlyResult,
+
+    getSemesterResult
 };

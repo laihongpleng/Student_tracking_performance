@@ -10,6 +10,7 @@ import PerformanceSummary from "../../components/admin/dashboard/PerformanceSumm
 import { useAdmin } from "../../context/AdminContext";
 import useAdminDashboard from "../../hooks/useAdminDashboard";
 import useMonthlyResult from "../../hooks/useMonthlyResult";
+import useSemesterResult from "../../hooks/useSemesterResult";
 
 const AdminDashboard = () => {
     const { academicYear } = useAdmin();
@@ -18,6 +19,12 @@ const AdminDashboard = () => {
     } = useMonthlyResult(
         academicYear,
         8
+        );
+        const {
+        semesterResult
+    } = useSemesterResult(
+        academicYear,
+        "Semester 1"
     );
     const { dashboard, loading } = useAdminDashboard(academicYear);
 
@@ -48,7 +55,7 @@ const AdminDashboard = () => {
 
                             <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
                                 <MonthlyResultTable data={monthlyResult}/>
-                                <SemesterResultTable />
+                                <SemesterResultTable data={semesterResult} />
                             </div>
 
                             <PerformanceSummary />
