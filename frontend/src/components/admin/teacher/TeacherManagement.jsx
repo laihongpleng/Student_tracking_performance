@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Plus } from "lucide-react";
+import { AlertTriangle, Plus } from "lucide-react";
 
 import TeacherTable from "./TeacherTable";
 import TeacherFormModal from "./TeacherFormModal";
@@ -262,6 +262,9 @@ const TeacherManagement = () => {
                     }
 
                     confirmText="Deactivate"
+
+
+                    Icon={AlertTriangle}
 
 
                     onClose={()=>setConfirm(null)}

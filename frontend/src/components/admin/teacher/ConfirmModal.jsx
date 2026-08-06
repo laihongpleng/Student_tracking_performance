@@ -1,4 +1,4 @@
-import { X, AlertTriangle } from "lucide-react";
+import { X, AlertTriangle, LogOut } from "lucide-react";
 
 const ConfirmModal=({
     open,
@@ -7,7 +7,8 @@ const ConfirmModal=({
     confirmText="Confirm",
     onClose,
     onConfirm,
-    danger=true
+    danger = true,
+    Icon = AlertTriangle,
 })=>{
 
     if(!open)return null;
@@ -18,7 +19,7 @@ const ConfirmModal=({
                 <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-3">
                         <div className={`w-10 h-10 rounded-full flex items-center justify-center ${danger?"bg-red-100 text-red-600":"bg-green-100 text-green-600"}`}>
-                            <AlertTriangle size={20}/>
+                            <Icon size={20}/>
                         </div>
                         <h3 className="font-semibold text-gray-800 text-sm">
                             {title}
