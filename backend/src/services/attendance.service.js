@@ -513,12 +513,17 @@ export const getAttendanceSummaryByClass = async (
     class_id: classId,
   };
 
-  if (startDate && endDate) {
+if (startDate && endDate) {
+
     filter.attendance_date = {
-      $gte: new Date(startDate),
-      $lte: new Date(endDate),
+
+        $gte: new Date(`${startDate}T00:00:00.000Z`),
+
+        $lte: new Date(`${endDate}T23:59:59.999Z`)
+
     };
-  }
+
+}
 
   const attendance = await Attendance.find(filter)
     .populate("student_id", "full_name")
@@ -603,11 +608,13 @@ export const getAttendanceSummaryByClass = async (
 
 export const getAttendanceByClassAndDate = async (
     classId,
+    subjectId,
     date
 ) => {
 
     const attendance = await Attendance.find({
-        class_id: classId,
+      class_id: classId,
+      subject_id: subjectId,
         attendance_date: {
             $gte: new Date(`${date}T00:00:00.000Z`),
             $lte: new Date(`${date}T23:59:59.999Z`)
@@ -641,5 +648,130 @@ export const getAttendanceByClassAndDate = async (
 
 
     return attendance;
+
+};
+
+export const getTeacherAttendanceOverview = async (
+    userId,
+    classId
+)=>{
+
+
+    const teacher =
+        await Teacher.findOne({
+            user_id:userId
+        });
+
+
+    if(!teacher){
+        throw new Error(
+            "Teacher not found"
+        );
+    }
+
+
+
+    const assignment =
+        await TeacherAssignment.findOne({
+
+            teacher_id:teacher._id,
+
+            class_id:classId,
+
+            isActive:true
+
+        });
+
+
+
+    if(!assignment){
+
+        throw new Error(
+            "You are not assigned to this class"
+        );
+
+    }
+
+
+
+    const totalStudents =
+        await Student.countDocuments({
+            class_id:classId
+        });
+
+
+
+    const today = new Date();
+
+const startOfDay = new Date(today);
+startOfDay.setHours(0, 0, 0, 0);
+
+const endOfDay = new Date(today);
+endOfDay.setHours(23, 59, 59, 999);
+
+
+const attendance =
+    await Attendance.find({
+
+        class_id: classId,
+
+        attendance_date: {
+            $gte: startOfDay,
+            $lte: endOfDay
+        }
+
+    });
+
+
+
+    const overview = {
+
+        totalStudents,
+
+        present:0,
+
+        absent:0,
+
+        late:0,
+
+        excused:0
+
+    };
+
+
+
+    attendance.forEach(item=>{
+
+
+        switch(item.status){
+
+            case "Present":
+                overview.present++;
+                break;
+
+
+            case "Absent":
+                overview.absent++;
+                break;
+
+
+            case "Late":
+                overview.late++;
+                break;
+
+
+            case "Excused":
+                overview.excused++;
+                break;
+
+        }
+
+
+    });
+
+
+
+    return overview;
+
 
 };

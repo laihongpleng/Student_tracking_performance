@@ -1,4 +1,4 @@
-
+import Student from "../models/Student.js";
 import {
   createStudentService,
   getStudents,
@@ -55,4 +55,30 @@ export const editStudent = async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
+};
+
+export const getStudentsByClass = async(req,res)=>{
+
+    try{
+
+        const students =
+            await Student.find({
+                class_id:req.params.classId
+            })
+            .sort({
+                full_name:1
+            });
+
+
+        res.json(students);
+
+
+    }catch(error){
+
+        res.status(500).json({
+            message:error.message
+        });
+
+    }
+
 };

@@ -8,6 +8,7 @@ import {
     getClassAttendanceSummary,
     getStudentAttendanceSummarycontroller,
     getClassAttendanceByDate,
+    teacherAttendanceOverview
 } from "../controllers/attendance.controller.js";
 
 import { protect } from "../middlewares/auth.middleware.js";
@@ -48,9 +49,18 @@ router.get(
 );
 
 router.get(
-    "/class/:classId/date/:date",
+    "/class/:classId/subject/:subjectId/date/:date",
     protect,
     allowRoles("admin","teacher"),
     getClassAttendanceByDate
 );
+
+router.get(
+    "/teacher-overview/:classId",
+    protect,
+    allowRoles("teacher"),
+    teacherAttendanceOverview
+);
+
 export default router;
+

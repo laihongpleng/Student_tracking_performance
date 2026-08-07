@@ -7,7 +7,8 @@ import {
     semesterResult,
     subjectRanking,
     studentProgress,
-    teacherStatistics
+    teacherStatistics,
+    teacherAttendanceClass,
 } from "../controllers/teacherclassesdashboard.controller.js";
 
 import {
@@ -68,5 +69,13 @@ router.get(
     allowRoles("teacher"),
     teacherStatistics
 );
+
+router.get(
+    "/attendance/class",
+    protect,
+    allowRoles("teacher"),
+    teacherAttendanceClass
+);
+
 
 export default router;

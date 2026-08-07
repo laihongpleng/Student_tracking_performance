@@ -48,11 +48,6 @@ const attendanceSchema = new mongoose.Schema(
     enum:["Semester 1", "Semester 2"]
     },
 
-    date: {
-    type: Date,
-    required: true
-    },
-    
     remark: {
       type: String,
       trim: true,

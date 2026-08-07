@@ -16,6 +16,16 @@ import AdminTeacherManagement from "./pages/admin/AdminTeacherManagement";
 import AdminSubjectManagement from "./pages/admin/AdminSubjectManagment";
 import AdminTeacherAssignmentManagement from "./pages/admin/AdminTeacherAssignmentManagement";
 
+import TeacherLayout from "./layouts/TeacherLayout";
+
+
+import MyClasses from "./pages/teacher/MyClasses";
+import Attendance from "./pages/teacher/Attendance";
+import ScoreManagement from "./pages/teacher/ScoreManagement";
+import TeacherProfile from "./pages/teacher/TeacherProfile";
+import AssessmentManagement from "./pages/teacher/AssessmentManagement";
+import AttendanceManagement from "./pages/teacher/AttendanceManagement";
+
 
 function App() {
 
@@ -80,13 +90,45 @@ function App() {
 
 
             <Route
-                path="/teacher"
-                element={
-                    <ProtectedRoute allowedRoles={["teacher"]}>
-                        <TeacherDashboard />
-                    </ProtectedRoute>
-                }
-            />
+    path="/teacher"
+    element={
+        <ProtectedRoute allowedRoles={["teacher"]}>
+            <TeacherLayout />
+        </ProtectedRoute>
+    }
+>
+
+    <Route
+        path="dashboard"
+        element={<TeacherDashboard />}
+    />
+
+    <Route
+        path="classes"
+        element={<MyClasses />}
+    />
+
+    <Route
+        path="attendance"
+        element={<AttendanceManagement />}
+    />
+
+    <Route
+        path="assessments"
+        element={<AssessmentManagement />}
+    />
+
+    <Route
+        path="scores"
+        element={<ScoreManagement />}
+    />
+
+    <Route
+        path="profile"
+        element={<TeacherProfile />}
+    />
+
+</Route>
 
 
             <Route

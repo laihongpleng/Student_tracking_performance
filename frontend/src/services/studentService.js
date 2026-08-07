@@ -22,3 +22,13 @@ export const updateStudent = async(id,data)=>{
     return res.data;
 
 };
+
+export const getStudentsByClass = async(classId)=>{
+
+    const res = await api.get(
+        `/students/class/${classId}`
+    );
+
+    return res.data;
+
+};

@@ -66,7 +66,9 @@ export const getTeacherClasses = async (
 
         classMap[classId]
         .subjects
-        .push({
+            .push({
+           
+            assignment_id:item._id,
             subject_id:item.subject_id._id,
             subject_name:item.subject_id.subject_name
         });
@@ -471,5 +473,85 @@ const calculateRanking =
             ...item
         })
     );
+
+    };
+
+    export const getTeacherAttendanceClass = async (
+    userId
+) => {
+
+    const teacher =
+        await Teacher.findOne({
+            user_id: userId
+        });
+
+
+    if(!teacher){
+
+        throw new Error(
+            "Teacher not found"
+        );
+
+    }
+
+
+
+    const assignment =
+        await TeacherAssignment.findOne({
+            teacher_id: teacher._id,
+            isActive:true
+        })
+        .populate(
+            "class_id",
+            "class_name academic_year"
+        );
+
+
+
+    if(!assignment){
+
+        throw new Error(
+            "No class assigned"
+        );
+
+    }
+
+
+
+    const students =
+        await Student.find({
+            class_id: assignment.class_id._id
+        })
+        .select(
+            "_id full_name gender"
+        )
+        .sort({
+            full_name:1
+        });
+
+
+
+    return {
+
+        class:{
+            id: assignment.class_id._id,
+            name: assignment.class_id.class_name,
+            academic_year:
+                assignment.class_id.academic_year
+        },
+
+
+        teacher_assignment_id:
+            assignment._id,
+
+
+        subject_id:
+            assignment.subject_id,
+
+
+        students
+
+    };
+
 
 };

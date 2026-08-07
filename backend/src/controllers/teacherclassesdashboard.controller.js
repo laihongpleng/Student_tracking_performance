@@ -5,7 +5,8 @@ import {
     getSemesterResult,
     getSubjectRanking,
     getStudentProgress,
-    getTeacherStatistics
+    getTeacherStatistics,
+    getTeacherAttendanceClass
 } from "../services/teacherclassesdashboard.service.js";
 
 
@@ -260,6 +261,33 @@ export const teacherStatistics = async(
         .json({
             message:
             err.message
+        });
+
+    }
+
+};
+
+export const teacherAttendanceClass = async(
+    req,
+    res
+)=>{
+
+    try{
+
+        const data =
+            await getTeacherAttendanceClass(
+                req.user._id
+            );
+
+
+        res.json(data);
+
+
+    }catch(err){
+
+        res.status(500)
+        .json({
+            message:err.message
         });
 
     }

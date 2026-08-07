@@ -6,6 +6,7 @@ import {
     getAttendanceSummaryByClass,
     getStudentAttendanceSummary,
     getAttendanceByClassAndDate,
+    getTeacherAttendanceOverview,
 } from "../services/attendance.service.js";
 
 export const createAttendance = async (req, res) => {
@@ -109,6 +110,7 @@ export const getClassAttendanceByDate = async( req, res )=>{
         const attendance =
         await getAttendanceByClassAndDate(
             req.params.classId,
+            req.params.subjectId,
             req.params.date
         );
 
@@ -125,3 +127,36 @@ export const getClassAttendanceByDate = async( req, res )=>{
     }
 
 };
+
+export const teacherAttendanceOverview = async(
+    req,
+    res
+)=>{
+
+    try{
+
+
+        const data =
+            await getTeacherAttendanceOverview(
+                req.user._id,
+                req.params.classId
+            );
+
+
+        res.json(data);
+
+
+    }catch(err){
+
+
+        res.status(500).json({
+
+            message:err.message
+
+        });
+
+
+    }
+
+};
+

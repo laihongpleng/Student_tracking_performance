@@ -38,7 +38,7 @@ const LoginForm = () => {
             toast.success("Login successful");
 
             if (response.user.role === "teacher") {
-                navigate("/teacher");
+                navigate("/teacher/dashboard");
             } else if (response.user.role === "student") {
                 navigate("/student");
             }
